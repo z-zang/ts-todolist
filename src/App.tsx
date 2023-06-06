@@ -1,34 +1,74 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { ChangeEvent, useState } from 'react'
 import './App.css'
+import { ITask } from './Interfaces';
+import TodoTask from './Components/TodoTask';
 
-function App() {
-  const [count, setCount] = useState(0)
+
+const App = () => {
+  const [count, setCount] = useState(0);
+
+  const [task, setTask] = useState<string>("")
+  const [deadline, setDeadline] = useState<number>(0)
+  const [todoList, setTodoList] = useState<ITask[]>([])
+  // const [displayedList, setDisplayList] = useState<ITask[]>([])
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
+    if (event.target.name === 'task') {
+      setTask(event.target.value)
+    } else {
+      setDeadline(Number(event.target.value))
+    }
+  }
+
+
+  const completeTask = (taskNameToDelete: string): void => {
+    setTodoList(todoList.filter((task) => task.taskName != taskNameToDelete))
+  }
+
+  // const handleTabClick = (event: ChangeEvent<HTMLInputElement>): void => {
+  //   console.log('hi')
+  // }
+
+  // const handleCheckboxChange = (event: ChangeEvent<HTMLInputElement>) => {
+  //   todoList.filter()
+  // }
+
+  const addTask = (): void => {
+    const newTask = {
+      taskName: task,
+      deadline: deadline,
+      isCompleted: false
+    }
+
+    setTodoList([...todoList, newTask])
+    setTask('')
+    setDeadline(0)
+  }
+
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <main className='app'>
+
+      <div className='header'>
+        <div className='inputContainer'>
+          <input type="text" value={task} placeholder='task...' name="task" onChange={handleChange}/>
+          <input type="number" value={deadline} placeholder='deadline in days' name="deadline" onChange={handleChange}/>
+        </div>
+        <button onClick={addTask}>Add Task</button>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
+
+      {/* <div className='listTabs'>
+        <button onClick={handleTabClick}>All</button>
+        <button onClick={handleTabClick}>Completed</button>
+        <button onClick={handleTabClick}>Todo</button>
+      </div> */}
+
+      <div className='todoList'>
+        {todoList.map((task: ITask, index: number) => {
+          return <TodoTask key={index} task={task} completeTask={completeTask}/>
+        })}
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    </main>
   )
 }
 

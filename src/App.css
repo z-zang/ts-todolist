@@ -1,6 +1,84 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+body {
+  margin: 0;
+}
+.app { 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+}
+
+/* Header */
+
+.header {
+  flex: 25%;
+  background-color: tomato;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+}
+
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.header input {
+  width: 200px;
+  height: 40px;
+  padding-left: 10px;
+  border: 1px solid grey;
+}
+
+input[type='text'] {
+  border-top-left-radius: 20px;
+  border-bottom: none;
+}
+
+input[type='number'] {
+  border-bottom-left-radius: 20px;
+}
+
+.header button {
+  height: 87px;
+  padding: 0px 20px;
+  cursor: pointer;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+  border: 1px solid grey;
+  border-left: none;
+}
+
+/* Tabs */
+.listTabs {
+  flex: 10%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   text-align: center;
+}
+
+/* Todo */
+.todoList {
+  flex: 65%;
+  width: 100%;
+  align-items: center;
+}
+
+.todoTask {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.todoTask > * {
+  padding: 20px;
 }
